@@ -3,22 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Custom Llama 3.2 AI</title>
+    <meta http-equiv="refresh" content="3; url=https://huggingface.co/spaces/YOUR_HF_USERNAME/YOUR_SPACE_NAME" />
+    <title>AiBurst Chat System</title>
     <style>
-        body, html {
-            margin: 0; padding: 0; height: 100%; overflow: hidden;
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #0e1117;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #ffffff;
+            text-align: center;
         }
-        iframe {
-            width: 100%; height: 100%; border: none;
+        .container {
+            max-width: 500px;
+            padding: 20px;
         }
+        h1 {
+            color: #ff4b4b;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #a3a8b4;
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #ff4b4b;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: background 0.2s ease;
+        }
+        .btn:hover {
+            background-color: #e03e3e;
+        }
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #ff4b4b;
+            animation: spin 1s linear infinite;
+            margin: 20px auto 0 auto;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
-    <iframe 
-    src="https://djkdjdsf-Llama3.2Tuned.hf.space" 
-    style="width: 100%; height: 600px; border: none;"
-    sandbox="allow-forms allow-modals allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts allow-downloads"
-    allow="geolocation; microphone; camera; midi; encrypted-media;">
-</iframe>
+    <div class="container">
+        <h1>AiBurst Chat</h1>
+        <p>Connecting to the multi-provider inference server...</p>
+        <a href="https://huggingface.co/spaces/djkdjdsf/Llama3.2Tuned" class="btn">Launch Chat Immediately</a>
+        <div class="spinner"></div>
+    </div>
 </body>
 </html>
