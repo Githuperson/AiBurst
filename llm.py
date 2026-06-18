@@ -46,32 +46,43 @@ def query_custom_model(prompt: str) -> str:
         return "❌ Connection timed out. The provider router took too long to respond."
     except Exception as e:
         return f"❌ Network error: {str(e)}"
-
 def stream_chat_with_qwen(user_message: str, history: list):
     """
-    Main orchestral layer called by app.py. Always runs a web search 
-    to provide the model with real-time background context.
+    Orchestration layer. Automatically fires a web search unless the 
+    message is a simple greeting or casual chit-chat.
     """
-    # 1. 🔍 Always run the web search no matter what the question is
-    with st.spinner("Searching the web for current data..."):
-        try:
-            context = web_search(user_message, max_results=3)
-        except Exception:
-            context = ""  # Fallback if the search engine times out or fails
+    # 1. Define a quick list of common casual greetings
+    greetings = ["hello", "hi", "hey", "sup", "yo", "greetings", "good morning", "good afternoon", "good evening", "howdy"]
+    
+    # Clean up the user's message to check it accurately
+    clean_message = user_message.strip().lower().replace("?", "").replace("!", "")
+    
+    context = ""
+    
+    # 2. Only search if it's NOT a basic greeting
+    if clean_message in greetings:
+        context = "" # Skip search for simple hellos
+    else:
+        with st.spinner("Searching the web for current data..."):
+            try:
+                context = web_search(user_message, max_results=3)
+            except Exception:
+                context = ""  # Safe fallback if search fails
 
-    # 2. Build the final prompt cleanly
+    # 3. Build the unified system prompt structure
     base_prompt = ""
     if context:
-        # We add a strong system instruction so the model knows this is live web data
         base_prompt += f"System: Use the following verified real-time web context to answer the user's query:\n{context}\n\n"
     
     base_prompt += f"User: {user_message}\nAssistant:"
     
+    # 4. Request inference answer
     model_reply = query_custom_model(base_prompt)
     
     if not model_reply or not isinstance(model_reply, str):
         model_reply = "⚠️ The inference model returned an empty response. Please try sending your message again."
     
+    # 5. Stream output back to the interface chunk-by-chunk
     words = model_reply.split(" ")
     for i, word in enumerate(words):
         yield " ".join(words[:i+1]) + " "
