@@ -72,7 +72,7 @@ def stream_chat_with_qwen(user_message: str, history: list):
     # 3. Build the unified system prompt structure
     base_prompt = ""
     if context:
-        base_prompt += f"System: Use the following verified real-time web context to answer the user's query:\n{context}\n\n"
+        base_prompt += f"System: Use the Web to answer logically and as short as possible to the user's query:\n{context}\n\n"
     
     base_prompt += f"User: {user_message}\nAssistant:"
     
