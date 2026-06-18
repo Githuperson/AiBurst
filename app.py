@@ -4,7 +4,7 @@ from datetime import datetime
 from llm import stream_chat_with_qwen
 
 # 1. This MUST be the absolute first Streamlit command!
-st.set_page_config(page_title="AiBurst - Llama 3.2", page_icon="⚡", layout="centered")
+st.set_page_config(page_title="AiBurst - Qwen 2.5", page_icon="⚡", layout="centered")
 
 # 2. Now you can safely initialize your database functions and hooks
 @st.cache_resource
