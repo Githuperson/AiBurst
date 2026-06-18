@@ -49,12 +49,12 @@ def stream_chat_with_qwen(user_message: str, history: list):
     Main orchestral layer called by app.py. Always runs a web search 
     to provide the model with real-time background context.
     """
-    # 1. Always run the web search
+    # 1. 🔍 Always run the web search no matter what the question is
     with st.spinner("Searching the web for current data..."):
         try:
             context = web_search(user_message, max_results=3)
         except Exception:
-            context = "" # Fallback if search fails or times out
+            context = ""  # Fallback if the search engine times out or fails
 
     # 2. Build the final prompt cleanly
     base_prompt = ""
