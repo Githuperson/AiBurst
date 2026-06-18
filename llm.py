@@ -46,16 +46,15 @@ def query_custom_model(prompt: str) -> str:
 
 def stream_chat_with_qwen(user_message: str, history: list):
     """
-    Main orchestral layer called by app.py. Evaluates if search is needed,
-    injects context, and yields the text over time to stream it cleanly in the UI.
+    Main orchestral layer called by app.py. Always runs a web search 
+    to provide the model with real-time background context.
     """
-    search_keywords = ["search", "weather", "news", "today", "latest", "current", "2026", "who is", "what happened"]
-    needs_web_search = any(keyword in user_message.lower() for keyword in search_keywords)
-    
-    context = ""
-    if needs_web_search:
-        with st.spinner("Searching the web for current data..."):
-            context = web_search(user_message, max_results=3) 
+    # 1. Always run the web search
+    with st.spinner("Searching the web for current data..."):
+        try:
+            context = web_search(user_message, max_results=3)
+        except Exception:
+            context = "" # Fallback if search fails or times out
 
     # 2. Build the final prompt cleanly
     base_prompt = ""
