@@ -21,7 +21,7 @@ db_logs = init_mongodb()
 
 # 3. Rest of your UI elements follow below...
 st.title("⚡ AiBurst Chat System")
-st.caption("Powered by a custom fine-tuned Llama 3.2 model with real-time web search integration.")
+st.caption("Powered by a custom fine-tuned Qwen 2.5 AI Model with real-time web search integration.")
 
 # Initialize Conversational Session State History arrays
 if "messages" not in st.session_state:
