@@ -16,7 +16,6 @@ def query_custom_model(prompt: str) -> str:
     """
     Queries Hugging Face's unified provider router using the OpenAI chat format.
     """
-    # Using ':fastest' lets HF automatically route to Groq, Sambanova, Together, etc.
     payload = {
         "model": "Qwen/Qwen2.5-7B-Instruct:fastest", 
         "messages": [
@@ -30,12 +29,16 @@ def query_custom_model(prompt: str) -> str:
         response = requests.post(API_URL, headers=headers, json=payload, timeout=30)
         response_json = response.json()
         
-        # Parse OpenAI chat format out of the unified provider response
+        # 1. Parse successful response
         if "choices" in response_json and len(response_json["choices"]) > 0:
             return response_json["choices"][0]["message"]["content"].strip()
         
+        # 2. Safely parse error strings or dictionaries
         if "error" in response_json:
-            return f"❌ Router Error: {response_json['error'].get('message', response_json['error'])}"
+            err = response_json["error"]
+            if isinstance(err, dict):
+                return f"❌ Router Error: {err.get('message', err)}"
+            return f"❌ Router Error: {err}"
             
         return "⚠️ Received an unparseable response format from the router."
 
