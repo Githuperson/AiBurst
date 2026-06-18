@@ -1,0 +1,6 @@
+streamlit
+pymongo
+requests
+dnspython
+ddgs
+duckduckgo-search
