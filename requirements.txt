@@ -3,4 +3,5 @@ pymongo
 requests
 dnspython
 ddgs
-duckduckgo-search
+pytz
+beautifulsoup4
